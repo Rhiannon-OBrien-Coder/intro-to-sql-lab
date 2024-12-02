@@ -17,7 +17,24 @@ SELECT * FROM countrylanguages WHERE countrycode = (SELECT code FROM countries W
 -- nothing but that language.
 
 -- Write SQL query here
-
+SELECT * 
+FROM countries 
+WHERE code = (
+    SELECT countrycode
+    FROM countrylanguages 
+    WHERE language = (
+        SELECT language
+        FROM countrylanguages
+        WHERE countrycode = (
+            SELECT code 
+            FROM countries 
+            WHERE region = 'Southern Europe'
+            AND population = (
+                SELECT MIN(population) 
+                FROM countries 
+                WHERE region = 'Southern Europe'
+        )))
+        AND percentage = 100);
 
 -- Clue #4: We're booking the first flight out – maybe we've actually got a chance to catch her this time. There 
 -- are only two cities she could be flying to in the country. One is named the same as the country – that would
